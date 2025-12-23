@@ -14,3 +14,14 @@ export async function getMeals():Promise<Meal[]> {
 
     return data.recipes;
 }
+
+export async function getMealById(id:number):Promise<Meal> {
+
+  const res = await fetch(`${URL}/${id}`)
+  
+  if(!res.ok) throw new Error("failed to fetch meal from api")
+  
+    const data:Meal = await res.json()
+
+    return data
+}
