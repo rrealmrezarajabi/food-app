@@ -23,7 +23,7 @@ export default async function MealDetailPage({ params }: Props) {
           ← Back to meals
         </Link>
 
-        <span className="text-sm text-zinc-500">Meal #{MealId}</span>
+       
       </div>
 
       <div className="mt-6 overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900">

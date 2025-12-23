@@ -1,9 +1,7 @@
-import { Meal } from "@/lib/types/meals";
 import { getMeals } from "@/lib/api/meals";
-import { Suspense } from "react";
+import { Meal } from "@/lib/types/meals";
+import MealsSearch from "./components/MealsSearch";
 
-import MealsListSkeleton from "./components/MealsCardSkeleton";
-import MealsList from "./components/MealsList";
 export default async function MealsPage() {
   const meals: Meal[] = await getMeals();
 
@@ -16,9 +14,8 @@ export default async function MealsPage() {
         </p>
       </div>
 
-      <Suspense fallback={<MealsListSkeleton />}>
-        <MealsList meals={meals} />
-      </Suspense>
+      
+      <MealsSearch meals={meals} />
     </div>
   );
 }
