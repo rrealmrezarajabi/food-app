@@ -2,12 +2,8 @@
 import { createContext, useContext, useState } from "react";
 import { Meal } from "@/lib/types/meals";
 
-interface cartItem extends Meal {
-  qty: number;
-}
-
 type CartContextType = {
-  cart: cartItem[];
+  cart: Meal[];
   addToCart: (meal: Meal) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
@@ -16,18 +12,14 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState<cartItem[]>([]);
+  const [cart, setCart] = useState<Meal[]>([]);
 
   const addToCart = (meal: Meal) => {
     const exist = cart.find((item) => item.id === meal.id);
     if (exist) {
-      setCart(
-        cart.map((item) =>
-          item.id === meal.id ? { ...item, qty: item.qty + 1 } : item
-        )
-      );
+      return;
     } else {
-      setCart([...cart, { ...meal, qty: 1 }]);
+      setCart((item) => [...item, meal]);
     }
   };
 
