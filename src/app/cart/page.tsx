@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 
 export default function CartPage() {
-  const { cart, removeFromCart } = useCart(); 
+  const { cart, removeFromCart ,clearCart } = useCart(); 
 
   if (cart.length === 0) {
     return (
@@ -82,7 +82,10 @@ export default function CartPage() {
         >
           Add more
         </Link>
-        <button className="px-4 py-2 rounded-lg border border-zinc-800 text-zinc-200 hover:border-red-500 transition">
+        <button
+          onClick={clearCart}
+          className="px-4 py-2 rounded-lg border border-zinc-800 text-zinc-200 hover:border-red-500 transition"
+        >
           clear cart
         </button>
       </div>
