@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { Meal } from "@/lib/types/meals";
 
 type CartContextType = {
@@ -11,8 +11,21 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | null>(null);
 
+const CART_KEY = "food_app_cart";
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<Meal[]>([]);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem(CART_KEY);
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (meal: Meal) => {
     const exist = cart.find((item) => item.id === meal.id);
