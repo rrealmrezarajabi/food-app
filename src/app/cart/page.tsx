@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 
 export default function CartPage() {
-  const { cart } = useCart(); 
+  const { cart, removeFromCart } = useCart(); 
 
   if (cart.length === 0) {
     return (
@@ -56,26 +56,35 @@ export default function CartPage() {
                 {meal.instructions}
               </p>
 
-              <div className="mt-3">
+              <div className="mt-3 flex justify-between items-center">
                 <Link
                   href={`/meals/${meal.id}`}
                   className="text-sm font-medium text-emerald-400 hover:text-emerald-300 transition"
                 >
                   View recipe →
                 </Link>
+                <button
+                  onClick={() => removeFromCart(meal.id)}
+                  className="px-4 py-2 rounded-lg border border-zinc-800 text-zinc-200 hover:border-red-500 transition"
+                >
+                  Remove From Cart
+                </button>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 flex justify-end gap-3">
+      <div className="mt-8 flex justify-between gap-3">
         <Link
           href="/meals"
           className="px-4 py-2 rounded-lg border border-zinc-800 text-zinc-200 hover:border-emerald-500/50 transition"
         >
           Add more
         </Link>
+        <button className="px-4 py-2 rounded-lg border border-zinc-800 text-zinc-200 hover:border-red-500 transition">
+          clear cart
+        </button>
       </div>
     </section>
   );
