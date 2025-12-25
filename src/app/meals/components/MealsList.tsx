@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Meal } from "@/lib/types/meals";
 import Link from "next/link";
+import AddToCartButton from "./buttons/AddToCart";
 interface MealsListProps {
   meals: Meal[];
 }
@@ -31,13 +32,14 @@ const MealsList = ({ meals }: MealsListProps) => {
               {meal.instructions}
             </p>
 
-            <div className="mt-4">
+            <div className="mt-4 flex justify-between">
               <Link href={`/meals/${meal.id}`}>
                 {" "}
                 <span className="text-sm font-medium text-emerald-400">
                   View Recipe →
                 </span>
               </Link>
+              <AddToCartButton meal={meal}/>
             </div>
           </div>
         </div>
