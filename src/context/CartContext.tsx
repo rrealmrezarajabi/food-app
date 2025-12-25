@@ -13,7 +13,7 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | null>(null);
 
-export function cartProvider({ children }: { children: React.ReactNode }) {
+export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<cartItem[]>([]);
 
   const addToCart = (meal:Meal) => {
