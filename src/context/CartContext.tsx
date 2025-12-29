@@ -1,5 +1,11 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useReducer,
+} from "react";
 import { Meal } from "@/lib/types/meals";
 
 type CartContextType = {
@@ -13,13 +19,43 @@ const CartContext = createContext<CartContextType | null>(null);
 
 const CART_KEY = "food_app_cart";
 
+type Action =
+  | { type: "LOAD"; payload: Meal[] }
+  | { type: "ADD"; payload: Meal }
+  | { type: "REMOVE"; payload: number }
+  | { type: "CLEAR" };
+
+function cartReducer(cart: Meal[], action: Action): Meal[] {
+  switch (action.type) {
+    case "LOAD":
+      return action.payload;
+    case "ADD": {
+      const meal = action.payload;
+      const exist = cart.some((item) => item.id === meal.id);
+      if (exist) return cart;
+      return [...cart, meal];
+    }
+
+    case "REMOVE": {
+      const mealId = action.payload;
+      return cart.filter((item) => item.id !== mealId);
+    }
+    case "CLEAR":
+      return [];
+    default:
+      return cart;
+  }
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState<Meal[]>([]);
+  // const [cart, setCart] = useState<Meal[]>([]);
+  const [cart, dispatch] = useReducer(cartReducer, []);
 
   useEffect(() => {
     const storedCart = localStorage.getItem(CART_KEY);
     if (storedCart) {
-      setCart(JSON.parse(storedCart));
+      // setCart(JSON.parse(storedCart));
+      dispatch({ type: "LOAD", payload: JSON.parse(storedCart) });
     }
   }, []);
 
@@ -27,22 +63,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (meal: Meal) => {
-    const exist = cart.find((item) => item.id === meal.id);
-    if (exist) {
-      return;
-    } else {
-      setCart((item) => [...item, meal]);
-    }
-  };
+  const addToCart = (meal: Meal) => dispatch({ type: "ADD", payload: meal });
 
-  const removeFromCart = (id: number) => {
-    setCart(cart.filter((item) => item.id !== id));
-  };
+  const removeFromCart = (id: number) =>
+    dispatch({ type: "REMOVE", payload: id });
 
-  const clearCart = () => {
-    setCart([]);
-  };
+  const clearCart = () => dispatch({ type: "CLEAR" });
 
   return (
     <CartContext.Provider
