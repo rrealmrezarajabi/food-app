@@ -27,7 +27,7 @@ export default async function MealDetailPage({ params }: Props) {
       </div>
 
       <div className="mt-6 overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900">
-        <div className="relative h-[260px] sm:h-[360px] md:h-[440px]">
+        <div className="relative h-65 sm:h-90 md:h-110">
           <Image
             src={meal.image}
             alt={meal.name}
@@ -35,7 +35,7 @@ export default async function MealDetailPage({ params }: Props) {
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/30 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-zinc-950/90 via-zinc-950/30 to-transparent" />
 
           <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
             <p className="text-emerald-400 text-sm font-semibold">Recipe</p>
