@@ -6,7 +6,7 @@ export default function MealDetailLoading() {
       </div>
 
       <div className="mt-6 overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900">
-        <div className="h-[260px] sm:h-[360px] md:h-[440px] bg-zinc-800" />
+        <div className="h-65 sm:h-90 md:h-110 bg-zinc-800" />
       </div>
 
       <div className="mt-8 grid gap-6 md:grid-cols-3">
